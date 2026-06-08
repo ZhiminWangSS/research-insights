@@ -1,0 +1,7 @@
+interface:
+  display_name: "Research Note Style"
+  short_description: "Concise Chinese AI research notes"
+  default_prompt: "Use $research-note-style to draft or revise a concise Chinese AI research note."
+
+policy:
+  allow_implicit_invocation: true
