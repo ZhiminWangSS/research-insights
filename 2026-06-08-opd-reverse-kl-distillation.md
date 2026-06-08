@@ -4,7 +4,7 @@
 
 OPD, On-Policy Distillation, 将蒸馏位置从 teacher/data trajectory 转到 student 自己生成的 trajectory 上。
 
-给定 prompt \(x\)，student 先采样生成：
+给定 prompt $x$，student 先采样生成：
 
 $$
 y \sim \pi_\theta(\cdot \mid x)
@@ -32,7 +32,7 @@ $$
 D_{\mathrm{KL}}
 \left(
 \pi_\theta(\cdot \mid s_t)
-\|
+\Vert
 \pi_T(\cdot \mid s_t)
 \right)
 $$
@@ -46,7 +46,7 @@ $$
 OPD 通常使用 student 到 teacher 的 KL：
 
 $$
-D_{\mathrm{KL}}(\pi_\theta \| \pi_T)
+D_{\mathrm{KL}}(\pi_\theta \Vert \pi_T)
 =
 \sum_y
 \pi_\theta(y \mid s)
@@ -64,7 +64,7 @@ $$
 相比之下，forward KL 为：
 
 $$
-D_{\mathrm{KL}}(\pi_T \| \pi_\theta)
+D_{\mathrm{KL}}(\pi_T \Vert \pi_\theta)
 =
 \sum_y
 \pi_T(y \mid s)
@@ -81,8 +81,8 @@ $$
 
 | KL 方向 | 加权分布 | 行为倾向 |
 |---|---|---|
-| \(D_{\mathrm{KL}}(\pi_T \| \pi_\theta)\) | teacher | mode-covering |
-| \(D_{\mathrm{KL}}(\pi_\theta \| \pi_T)\) | student | mode-seeking |
+| $D_{\mathrm{KL}}(\pi_T \Vert \pi_\theta)$ | teacher | mode-covering |
+| $D_{\mathrm{KL}}(\pi_\theta \Vert \pi_T)$ | student | mode-seeking |
 
 在 OPD 中，reverse KL 的作用更像是在 student 已经进入的区域内做约束：保留 student 的 on-policy 分布，同时减少它相对 teacher 的偏移。
 
@@ -97,12 +97,12 @@ $$
 D_{\mathrm{KL}}
 \left(
 \pi_T(\cdot \mid s)
-\|
+\Vert
 \pi_\theta(\cdot \mid s)
 \right)
 $$
 
-其中 \(\mathcal{D}\) 可以来自人工数据、teacher 采样，或固定训练集。
+其中 $\mathcal{D}$ 可以来自人工数据、teacher 采样，或固定训练集。
 
 这种设置强调让 student 覆盖 teacher 在这些 prefix 上的输出分布。它更接近 supervised learning：teacher 给出软标签，student 拟合这些软标签。
 
@@ -117,8 +117,8 @@ OPD 改变了两个部分：
 
 | 方法 | Prefix 来源 | KL 方向 | 主要作用 |
 |---|---|---|---|
-| 普通蒸馏 | data / teacher | \(D_{\mathrm{KL}}(\pi_T \| \pi_\theta)\) | 覆盖 teacher 分布 |
-| OPD | student on-policy | \(D_{\mathrm{KL}}(\pi_\theta \| \pi_T)\) | 修正 student 自身轨迹上的偏移 |
+| 普通蒸馏 | data / teacher | $D_{\mathrm{KL}}(\pi_T \Vert \pi_\theta)$ | 覆盖 teacher 分布 |
+| OPD | student on-policy | $D_{\mathrm{KL}}(\pi_\theta \Vert \pi_T)$ | 修正 student 自身轨迹上的偏移 |
 
 核心区别可以概括为：
 

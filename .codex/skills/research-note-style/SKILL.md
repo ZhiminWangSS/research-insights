@@ -23,13 +23,19 @@ Use Markdown LaTeX. Put important formulas in centered display blocks:
 
 ```markdown
 $$
-D_{\mathrm{KL}}(P \| Q)
+D_{\mathrm{KL}}(P \Vert Q)
 =
 \sum_x P(x)\log\frac{P(x)}{Q(x)}
 $$
 ```
 
-Use inline math only for short symbols, e.g. \(\pi_\theta\), \(\pi_T\), \(s_t\).
+For GitHub compatibility, use `$...$` for inline math, not `\(...\)`. Use inline math only for short symbols, e.g. $\pi_\theta$, $\pi_T$, $s_t$.
+
+Inside Markdown tables, avoid raw `|` characters in math. Prefer `\Vert` over `\|` for KL notation:
+
+```markdown
+$D_{\mathrm{KL}}(\pi_T \Vert \pi_\theta)$
+```
 
 Prefer short paragraphs over nested lists. Use tables only when they make comparisons easier to scan.
 
